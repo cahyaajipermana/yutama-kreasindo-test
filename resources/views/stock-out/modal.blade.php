@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">New Item</h4>
+                <h4 class="modal-title">Add Stock Out</h4>
             </div>
             <form id="form-create">
                 <div class="modal-body">
@@ -42,7 +42,7 @@
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Delete Item</h4>
+                <h4 class="modal-title">Delete Stock Out</h4>
             </div>
             <div class="modal-body">
                 <p>Are you sure to delete this item <strong><span id="data-hapus"></span></strong>?</p>

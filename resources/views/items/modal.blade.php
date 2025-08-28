@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">New Item</h4>
+                <h4 class="modal-title">Add Item</h4>
             </div>
             <form id="form-create">
                 <div class="modal-body">
@@ -100,7 +100,7 @@
     <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">New Category</h4>
+                <h4 class="modal-title">Add Category</h4>
             </div>
             <form id="form-create-category">
                 <div class="modal-body">
