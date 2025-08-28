@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label for="code_item" class="control-label">Item Code</label>
-                        <input type="text" name="code_item" id="code_item" class="form-control" required placeholder="DEV/YYYYMMDD/SEQUENCE">
+                        <input readonly type="text" name="code_item" id="code_item" class="form-control" required placeholder="DEV/YYYYMMDD/SEQUENCE">
                     </div>
                 </div>
                 <div class="modal-footer">
