@@ -49,7 +49,7 @@
 
         // init data table
         setDataTable(".data-table", "{{ route('items.index') }}", search, columns, {
-            order: [0, 'asc']
+            order: [0, 'desc']
         })
 
         let searchTimeout = null
@@ -59,7 +59,7 @@
                 search.search_field = $(this).attr('data-field')
                 search.search_value = $(this).val()
                 setDataTable(".data-table", "{{ route('items.index') }}", search, columns, {
-                    order: [0, 'asc']
+                    order: [0, 'desc']
                 })
             }, 500)
         })
