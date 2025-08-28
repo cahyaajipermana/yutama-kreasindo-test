@@ -48,7 +48,7 @@
                                                 <input type="text" data-field="item_name" class="form-control search-by" placeholder="Search by Name..." style="width: 150px;">
                                             </td>
                                             <td>
-                                                <input type="number" data-field="stock" class="form-control search-by" placeholder="Search by Qty..." style="width: 150px;">
+                                                <input type="number" data-field="quantity" class="form-control search-by" placeholder="Search by Qty..." style="width: 150px;">
                                             </td>
                                             <td>
                                                 <input type="text" data-field="created_by" class="form-control search-by" placeholder="Search by Creator..." style="width: 150px;">

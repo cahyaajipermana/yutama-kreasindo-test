@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\LogItemController;
 use App\Http\Controllers\StockInController;
 use App\Http\Controllers\StockOutController;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('item-category', ItemCategoryController::class);
     Route::resource('stock-in', StockInController::class);
     Route::resource('stock-out', StockOutController::class);
+    Route::resource('log-item', LogItemController::class);
 });

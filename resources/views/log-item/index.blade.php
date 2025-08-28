@@ -7,13 +7,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-6">Stock Out</div>
+                        <div class="col-6">Log Item</div>
                         <div class="col-6">
-                            <div class="d-flex align-items-center justify-content-end gap-2">
-                                <button type="button" class="btn btn-success btn-tambah" data-toggle="modal" data-target="#createModal">
-                                    <span><i class="fa fa-plus"></i></span> Add Item
-                                </button>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -33,10 +29,10 @@
                                         <tr>
                                             <th>Item Code</th>
                                             <th>Item Name</th>
+                                            <th>In/Out</th>
                                             <th>Quantity</th>
                                             <th>Created By</th>
                                             <th>Created At</th>
-                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <thead>
@@ -46,6 +42,13 @@
                                             </td>
                                             <td>
                                                 <input type="text" data-field="item_name" class="form-control search-by" placeholder="Search by Name..." style="width: 150px;">
+                                            </td>
+                                            <td>
+                                                <select name="type" data-field="type" class="form-control search-by" style="width: 150px;">
+                                                    <option value="">Select In/Out</option>
+                                                    <option value="masuk">In</option>
+                                                    <option value="keluar">out</option>
+                                                </select>
                                             </td>
                                             <td>
                                                 <input type="number" data-field="quantity" class="form-control search-by" placeholder="Search by Qty..." style="width: 150px;">
@@ -72,10 +75,8 @@
     </div>
 </div>
 
-@include('stock-out.modal')
-
 @endsection
 
 @push('after-script')
-@include('stock-out.script')
+@include('log-item.script')
 @endpush
