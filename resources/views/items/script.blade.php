@@ -6,6 +6,10 @@
                 className: 'text-center'
             },
             {
+                data: 'category_name',
+                name: 'category_name'
+            },
+            {
                 data: 'code_item',
                 name: 'code_item'
             },
@@ -16,6 +20,10 @@
             {
                 data: 'stock',
                 name: 'stock'
+            },
+            {
+                data: 'user_name',
+                name: 'user_name'
             },
             {
                 data: 'updated_at',
@@ -115,6 +123,72 @@
             }
             let storeRoute = "{{ route('items.store') }}";
             storeData(storeRoute, formData);
+        });
+
+        $(document).on("submit", "#form-create-category", function(e){
+            e.preventDefault();
+
+            let formData = {
+                name: $("#category_name").val(),
+            }
+            let storeRoute = "{{ route('item-category.store') }}";
+            storeData(storeRoute, formData);
+        });
+
+        $(document).on("click", ".btn-edit", function(){
+            $("#item_name_edit").val("");
+            $("#code_item_edit").val("");
+            $("#category_id_edit").val("");
+
+            let url = "{{ route('items.edit', 'data-id') }}";
+            id = $(this).attr("data-id");
+            url = url.replace("data-id", id);
+
+            $.ajax({
+                url: url,
+                success: function(res){
+                    let data = res.data
+                    $("#item_name_edit").val(data.item_name);
+                    $("#code_item_edit").val(data.code_item);
+                    $("#category_id_edit").val(data.category_id);
+                },
+                error: function(res){
+                    $.toast({
+                        heading: 'Gagal',
+                        text: 'Gagal menampilkan data!',
+                        position: 'top-right',
+                        loaderBg: '#fff',
+                        icon: 'warning',
+                        hideAfter: 3500,
+                        stack: 6
+                    })
+                }
+            });
+        });
+
+        $(document).on("submit", "#form-edit", function(e){
+            e.preventDefault();
+            let formData = {
+                _method: 'PUT',
+                item_name: $("#item_name_edit").val(),
+                category_id: $("#category_id_edit").val(),
+            }
+            let route = "{{ route('items.update', 'data-id') }}";
+            route = route.replace("data-id", id);
+            updateData(route, formData);
+        });
+
+        $(document).on("click", ".btn-delete", function(){
+            let name = $(this).attr("data-name");
+            $("#data-hapus").html(name);
+            id = $(this).attr("data-id");
+        });
+
+        $(document).on("submit", "#form-hapus", function(e){
+            e.preventDefault();
+            let route = "{{ route('items.destroy', 'data-id') }}";
+            route = route.replace("data-id", id);
+            deleteData(route);
         });
         
     });

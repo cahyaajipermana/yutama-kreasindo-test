@@ -58,14 +58,20 @@
                                 </li>
                             @endif
 
-                            {{-- @if (Route::has('register'))
+                            @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif --}}
+                            @endif
                         @else
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('items.index') }}">Items</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('stock-in.index') }}">Stock In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('stock-out.index') }}">Stock Out</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -115,20 +121,15 @@
                 }
             }
 
-            console.log('data', data)
-
             $(tableElementId).DataTable({
                 ...options,
                 processing: true,
                 serverSide: true,
-                // fixedHeader: {
-                //     header: true,
-                //     headerOffset: $(".navbar").height()
-                // },
                 ajax: {
                     url: url,
                     data: data,
                 },
+                searching: false,
                 columns: columns,
                 initComplete: function () {
                     // this.api()

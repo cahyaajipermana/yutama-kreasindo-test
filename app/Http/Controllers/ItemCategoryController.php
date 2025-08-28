@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ItemCategory;
 use Illuminate\Http\Request;
 
 class ItemCategoryController extends Controller
@@ -34,7 +35,20 @@ class ItemCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $item = new ItemCategory();
+        $item->name = trim($request->name);
+        $item->created_by = auth()->user()->id;
+        $item->updated_by = auth()->user()->id;
+        $item->save();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $item
+        ], 200);
     }
 
     /**

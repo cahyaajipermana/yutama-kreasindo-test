@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\StockInController;
+use App\Http\Controllers\StockOutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect(route('home'));
+    return redirect(route('items.index'));
 });
 
 Auth::routes();
@@ -28,5 +31,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/items/get-code-item', [ItemsController::class, 'getCodeItem'])->name('items.get-code-item');
+    Route::get('/items/get-item-by-category', [ItemsController::class, 'getItemByCategory'])->name('items.get-item-by-category');
     Route::resource('items', ItemsController::class);
+    Route::resource('item-category', ItemCategoryController::class);
+    Route::resource('stock-in', StockInController::class);
+    Route::resource('stock-out', StockOutController::class);
 });

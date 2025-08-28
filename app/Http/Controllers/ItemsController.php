@@ -20,12 +20,19 @@ class ItemsController extends Controller
             $searchField = $request->search_field ?? null;
             $searchValue = $request->search_value ?? null;
 
-            $data = Items::whereNotNull('stock');
+            $data = Items::with(['user', 'category'])
+                ->withAggregate('user', 'name')
+                ->withAggregate('category', 'name');
 
-            $search = trim($request->input('search')['value']);
             if ($searchField && $searchValue) {
                 $data = $data->where(function($query) use($searchField, $searchValue){
-                    $query->where($searchField, 'like', "%$searchValue%");
+                    if ($searchField == 'created_by') {
+                        $query->whereHas('user', function ($query) use ($searchField, $searchValue) {
+                            $query->where('name', 'like', "%$searchValue%");
+                        });
+                    } else {
+                        $query->where($searchField, 'like', "%$searchValue%");
+                    }
                 });
             }
 
@@ -35,12 +42,14 @@ class ItemsController extends Controller
                     $id = $row->id;
                     $name = $row->item_name;
                     $btn = "
-                        <button type='button' class='btn btn-warning btn-edit' data-id='$id' data-toggle='modal' data-target='#editModal'>
-                            <i class='fa fa-edit'></i>
-                        </button>
-                        <button type='button' class='btn btn-danger btn-delete' data-id='$id' data-name='$name' data-toggle='modal' data-target='#deleteModal'>
-                            <i class='fa fa-trash'></i>
-                        </button>
+                        <div class='d-flex align-items-center gap-1'>
+                            <button type='button' class='btn btn-warning btn-edit' data-id='$id' data-toggle='modal' data-target='#editModal'>
+                                <i class='fa fa-edit'></i>
+                            </button>
+                            <button type='button' class='btn btn-danger btn-delete' data-id='$id' data-name='$name' data-toggle='modal' data-target='#deleteModal'>
+                                <i class='fa fa-trash'></i>
+                            </button>
+                        </div>
                     ";
                     return $btn;
                 })
@@ -89,6 +98,7 @@ class ItemsController extends Controller
         $item->code_item = $codeItem;
         $item->category_id = $request->category_id;
         $item->created_by = auth()->user()->id;
+        $item->updated_by = auth()->user()->id;
         $item->save();
 
         return response()->json([
@@ -105,7 +115,12 @@ class ItemsController extends Controller
      */
     public function show($id)
     {
-        //
+        $item = Items::find($id);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $item
+        ], 200);
     }
 
     /**
@@ -116,7 +131,12 @@ class ItemsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Items::find($id);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $item
+        ], 200);
     }
 
     /**
@@ -128,7 +148,22 @@ class ItemsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'category_id' => 'required',
+            'item_name' => 'required'
+        ]);
+
+        $item = Items::find($id);
+        $item->item_name = trim($request->item_name);
+        $item->category_id = $request->category_id;
+        $item->updated_by = auth()->user()->id;
+        $item->updated_at = now();
+        $item->update();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $item
+        ], 200);
     }
 
     /**
@@ -139,7 +174,13 @@ class ItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $item = Items::find($id);
+        $item->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $item
+        ], 200);
     }
 
     /**
@@ -171,6 +212,18 @@ class ItemsController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => $codeItem
+        ], 200);
+    }
+
+    public function getItemByCategory(Request $request)
+    {
+        $categoryId = $request->category_id;
+
+        $items = Items::where('category_id', $categoryId)->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $items
         ], 200);
     }
 }

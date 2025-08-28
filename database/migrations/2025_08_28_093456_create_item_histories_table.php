@@ -16,7 +16,7 @@ class CreateItemHistoriesTable extends Migration
         Schema::create('item_histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('item_id')->index();
-            $table->unsignedBigInteger('stock')->index();
+            $table->unsignedBigInteger('quantity')->index();
             $table->enum('type', ['masuk', 'keluar'])->index();
             $table->unsignedBigInteger('created_by')->index();
             $table->timestamps();
