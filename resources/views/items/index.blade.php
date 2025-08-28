@@ -11,10 +11,10 @@
                         <div class="col-6">
                             <div class="d-flex align-items-center justify-content-end gap-2">
                                 <button type="button" class="btn btn-success btn-tambah" data-toggle="modal" data-target="#createModal">
-                                    <span><i class="fa fa-plus"></i></span> New Item
+                                    <span><i class="fa fa-plus"></i></span> Add Item
                                 </button>
                                 <button type="button" class="btn btn-primary btn-tambah" data-toggle="modal" data-target="#createCategoryModal">
-                                    <span><i class="fa fa-plus"></i></span> New Category
+                                    <span><i class="fa fa-plus"></i></span> Add Category
                                 </button>
                             </div>
                         </div>
