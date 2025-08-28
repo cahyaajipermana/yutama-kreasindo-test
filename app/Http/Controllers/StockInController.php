@@ -7,6 +7,7 @@ use App\Models\ItemHistory;
 use App\Models\Items;
 use DataTables;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StockInController extends Controller
 {
@@ -92,6 +93,8 @@ class StockInController extends Controller
         $itemId = $request->item_id;
         $quantity = $request->quantity;
 
+        DB::beginTransaction();
+
         // create history
         $itemHistory = new ItemHistory();
         $itemHistory->item_id = $itemId;
@@ -106,6 +109,8 @@ class StockInController extends Controller
         $itemHistory->updated_by = auth()->user()->id;
         $itemHistory->updated_at = now();
         $item->update();
+
+        DB::commit();
 
         return response()->json([
             'status' => 'success',
@@ -155,6 +160,8 @@ class StockInController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
+
         // create history
         $itemHistory = ItemHistory::find($id);
         $itemId = $itemHistory->item_id;
@@ -167,6 +174,8 @@ class StockInController extends Controller
         $itemHistory->updated_by = auth()->user()->id;
         $itemHistory->updated_at = now();
         $item->update();
+
+        DB::commit();
 
         return response()->json([
             'status' => 'success',
